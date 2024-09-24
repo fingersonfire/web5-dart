@@ -25,8 +25,11 @@ class DidWeb {
 
     final parsed = Uri.tryParse(url);
     if (parsed == null) throw 'Unable to parse url $url';
-    final String didId =
-        'did:web:${parsed.host}${parsed.pathSegments.join(':')}';
+
+    String didId = 'did:web:${parsed.host}';
+    if (parsed.pathSegments.isNotEmpty) {
+      didId += ':${parsed.pathSegments.join(':')}';
+    }
 
     final DidDocument doc = DidDocument(
       id: didId,
